@@ -17,10 +17,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        userInput = findViewById(R.id.editText);
+        userInput = findViewById(R.id.NewNumber);
         button0 = findViewById(R.id.button0);
         buttonbackSpace = findViewById(R.id.buttonBackSpace);
         mainVoid();
+
 
 
     }
@@ -34,10 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         View.OnClickListener buttonBackListener = view -> {
-            //calling constructor for StringBuffer class
-            StringBuffer sb= new StringBuffer(String.valueOf(userInput.getText()));
-            //invoking the method
-            userInput.setText(sb.deleteCharAt(sb.length()-1));
+            if(userInput.getText().length()>0) {
+                //calling constructor for StringBuffer class
+                StringBuffer sb = new StringBuffer(String.valueOf(userInput.getText()));
+                //invoking the method
+                userInput.setText(sb.deleteCharAt(sb.length() - 1));
+            }
         };
         buttonbackSpace.setOnClickListener(buttonBackListener);
 
