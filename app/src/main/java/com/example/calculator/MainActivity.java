@@ -34,12 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         View.OnClickListener buttonBackListener = view -> {
-            String input = String.valueOf(userInput.getText());
             //calling constructor for StringBuffer class
-            StringBuffer sb= new StringBuffer(input);
+            StringBuffer sb= new StringBuffer(String.valueOf(userInput.getText()));
             //invoking the method
-            sb.deleteCharAt(sb.length()-1);
-            userInput.setText(sb);
+            userInput.setText(sb.deleteCharAt(sb.length()-1));
         };
         buttonbackSpace.setOnClickListener(buttonBackListener);
 
