@@ -39,12 +39,14 @@
 
     <EditText
         android:id="@+id/result"
-        android:layout_width="398dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="4dp"
+        android:layout_width="399dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="76dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -150,10 +152,10 @@
 
     <Button
         android:id="@+id/buttonDiv"
-        android:backgroundTint="#858585"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="20dp"
+        android:backgroundTint="#858585"
         android:gravity="center_vertical|center_horizontal"
         android:insetTop="0dp"
         android:insetBottom="0dp"
@@ -165,10 +167,10 @@
 
     <Button
         android:id="@+id/buttonPercent"
-        android:backgroundTint="#858585"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="20dp"
+        android:backgroundTint="#858585"
         android:gravity="center_vertical|center_horizontal"
         android:insetTop="0dp"
         android:insetBottom="0dp"
@@ -180,10 +182,10 @@
 
     <Button
         android:id="@+id/buttonBackSpace"
-        android:backgroundTint="#858585"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="20dp"
+        android:backgroundTint="#858585"
         android:gravity="center_vertical|center_horizontal"
         android:insetTop="0dp"
         android:insetBottom="0dp"
@@ -191,7 +193,7 @@
         android:textSize="30sp"
         app:cornerRadius="38dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonClear"
-        app:layout_constraintStart_toEndOf="@+id/buttonClear"/>
+        app:layout_constraintStart_toEndOf="@+id/buttonClear" />
 
     <Button
         android:id="@+id/button0"
