@@ -52,7 +52,7 @@
         android:id="@+id/button1"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="30dp"
         android:gravity="center_vertical|center_horizontal"
         android:insetTop="0dp"
         android:insetBottom="0dp"
