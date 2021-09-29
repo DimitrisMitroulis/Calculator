@@ -15,13 +15,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
+        hideNavBar();
 
         userInput = findViewById(R.id.NewNumber);
         button0 = findViewById(R.id.button0);
         buttonbackSpace = findViewById(R.id.buttonBackSpace);
+
         mainVoid();
 
+
+
+    }
+    private void hideNavBar(){
+        this.getWindow().getDecorView()
+                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY|
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                );
 
 
     }
