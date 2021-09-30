@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY|
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 );
-
-
     }
+
+
 
     private void mainVoid() {
         View.OnClickListener button0Listener = view -> {

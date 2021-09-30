@@ -93,7 +93,7 @@
         android:id="@+id/buttonClear"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="96dp"
         android:backgroundTint="#858585"
         android:gravity="center_vertical|center_horizontal"
         android:insetTop="0dp"
