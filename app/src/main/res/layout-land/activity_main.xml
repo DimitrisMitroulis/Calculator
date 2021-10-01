@@ -41,7 +41,7 @@
         app:layout_constraintStart_toEndOf="@+id/buttonMinus" />
 
     <Button
-        android:id="@+id/buttonPoint"
+        android:id="@+id/buttonDot"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="20dp"
@@ -131,8 +131,8 @@
         android:text="="
         android:textSize="30sp"
         app:cornerRadius="38dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/buttonPoint"
-        app:layout_constraintStart_toEndOf="@+id/buttonPoint" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonDot"
+        app:layout_constraintStart_toEndOf="@+id/buttonDot" />
 
     <Button
         android:id="@+id/buttonMinus"

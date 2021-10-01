@@ -12,7 +12,7 @@
         android:layout_width="229dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="24dp"
         android:background="#00000000"
         android:ems="10"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonMinus" />
 
     <Button
-        android:id="@+id/buttonPoint"
+        android:id="@+id/buttonDot"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="20dp"
@@ -93,7 +93,7 @@
         android:id="@+id/buttonClear"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="68dp"
         android:backgroundTint="#858585"
         android:gravity="center_vertical|center_horizontal"
         android:insetTop="0dp"
@@ -327,7 +327,7 @@
         android:id="@+id/NewNumber"
         android:layout_width="310dp"
         android:layout_height="52dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:background="#00000000"
         android:ems="10"
@@ -336,7 +336,7 @@
         android:inputType="numberSigned|numberDecimal"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.61"
+        app:layout_constraintHorizontal_bias="0.694"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ResultText"
         tools:text="-400*2" />
@@ -345,12 +345,12 @@
         android:id="@+id/operation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="24dp"
         android:text="+"
         android:textSize="30dp"
         app:layout_constraintBaseline_toBaselineOf="@id/NewNumber"
         app:layout_constraintEnd_toStartOf="@+id/NewNumber"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/NewNumber" />
 
