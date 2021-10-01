@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
             button5, button6, button7, button8, button9, buttonDot,
             buttonClear, buttonbackSpace, buttonPercent, buttonDiv,
             buttonMult, buttonMinus, buttonPlus, buttonEq;
-    //private Button[] buttons = new Button[10];
+
     List<Integer> numbers = new ArrayList<Integer>();
-    int counter = 0;
+    private boolean ran_buttons =false;
 
 
     @Override
@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     private void hideNavBar() {
         getSupportActionBar().hide();
         this.getWindow().getDecorView()
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-
+    if(ran_buttons){
         button0.setOnClickListener(listener0);
         button1.setOnClickListener(listener0);
         button2.setOnClickListener(listener0);
@@ -110,6 +108,20 @@ public class MainActivity extends AppCompatActivity {
         button7.setOnClickListener(listener0);
         button8.setOnClickListener(listener0);
         button9.setOnClickListener(listener0);
+    }else{
+        button0.setOnClickListener(listener);
+        button1.setOnClickListener(listener);
+        button2.setOnClickListener(listener);
+        button3.setOnClickListener(listener);
+        button4.setOnClickListener(listener);
+        button5.setOnClickListener(listener);
+        button6.setOnClickListener(listener);
+        button7.setOnClickListener(listener);
+        button8.setOnClickListener(listener);
+        button9.setOnClickListener(listener);
+
+    }
+
         buttonDot.setOnClickListener(listener);
 
 
