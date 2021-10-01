@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         //creating listener so everytime a button gets clicked, it will sho the corresponding element from the array(a random one)
         // instead of the actual button that is represented
-        View.OnClickListener listener0 = view -> {
+        View.OnClickListener trollListener = view -> {
             Button b = (Button) view;
             newNumber.append(String.valueOf(numbers.get(Integer.parseInt(b.getText().toString()))));
 
@@ -98,16 +98,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     if(ran_buttons){
-        button0.setOnClickListener(listener0);
-        button1.setOnClickListener(listener0);
-        button2.setOnClickListener(listener0);
-        button3.setOnClickListener(listener0);
-        button4.setOnClickListener(listener0);
-        button5.setOnClickListener(listener0);
-        button6.setOnClickListener(listener0);
-        button7.setOnClickListener(listener0);
-        button8.setOnClickListener(listener0);
-        button9.setOnClickListener(listener0);
+        button0.setOnClickListener(trollListener);
+        button1.setOnClickListener(trollListener);
+        button2.setOnClickListener(trollListener);
+        button3.setOnClickListener(trollListener);
+        button4.setOnClickListener(trollListener);
+        button5.setOnClickListener(trollListener);
+        button6.setOnClickListener(trollListener);
+        button7.setOnClickListener(trollListener);
+        button8.setOnClickListener(trollListener);
+        button9.setOnClickListener(trollListener);
     }else{
         button0.setOnClickListener(listener);
         button1.setOnClickListener(listener);
