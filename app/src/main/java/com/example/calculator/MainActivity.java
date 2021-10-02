@@ -2,9 +2,11 @@ package com.example.calculator;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -18,6 +20,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "";
+    private Switch TrollSwitch;
     private EditText newNumber, result;
     private TextView operation;
     private Button button0, button1, button2, button3, button4,
@@ -26,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
             buttonMult, buttonMinus, buttonPlus, buttonEq;
 
     List<Integer> numbers = new ArrayList<Integer>();
-    private boolean ran_buttons =false;
+    private boolean ran_buttons = false;
 
 
     @Override
@@ -34,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         hideNavBar();
-
 
 
         button0 = findViewById(R.id.button0);
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         result = findViewById(R.id.ResultText);
         newNumber = findViewById(R.id.NewNumber);
 
+        TrollSwitch = findViewById(R.id.trollSwitch);
+
 
         mainVoid();
 
@@ -91,36 +95,93 @@ public class MainActivity extends AppCompatActivity {
             newNumber.append(String.valueOf(numbers.get(Integer.parseInt(b.getText().toString()))));
 
         };
+        //normal listener
         View.OnClickListener listener = view -> {
             Button b = (Button) view;
             newNumber.append(b.getText().toString());
         };
+        View.OnClickListener SwitchListener = view -> {
+
+            if (!ran_buttons) {
+                Log.d(TAG, "mainVoid: Activated");
+                button0.setOnClickListener(null);
+                button1.setOnClickListener(null);
+                button2.setOnClickListener(null);
+                button3.setOnClickListener(null);
+                button4.setOnClickListener(null);
+                button5.setOnClickListener(null);
+                button6.setOnClickListener(null);
+                button7.setOnClickListener(null);
+                button8.setOnClickListener(null);
+                button9.setOnClickListener(null);
 
 
-    if(ran_buttons){
-        button0.setOnClickListener(trollListener);
-        button1.setOnClickListener(trollListener);
-        button2.setOnClickListener(trollListener);
-        button3.setOnClickListener(trollListener);
-        button4.setOnClickListener(trollListener);
-        button5.setOnClickListener(trollListener);
-        button6.setOnClickListener(trollListener);
-        button7.setOnClickListener(trollListener);
-        button8.setOnClickListener(trollListener);
-        button9.setOnClickListener(trollListener);
-    }else{
-        button0.setOnClickListener(listener);
-        button1.setOnClickListener(listener);
-        button2.setOnClickListener(listener);
-        button3.setOnClickListener(listener);
-        button4.setOnClickListener(listener);
-        button5.setOnClickListener(listener);
-        button6.setOnClickListener(listener);
-        button7.setOnClickListener(listener);
-        button8.setOnClickListener(listener);
-        button9.setOnClickListener(listener);
+                button0.setOnClickListener(trollListener);
+                button1.setOnClickListener(trollListener);
+                button2.setOnClickListener(trollListener);
+                button3.setOnClickListener(trollListener);
+                button4.setOnClickListener(trollListener);
+                button5.setOnClickListener(trollListener);
+                button6.setOnClickListener(trollListener);
+                button7.setOnClickListener(trollListener);
+                button8.setOnClickListener(trollListener);
+                button9.setOnClickListener(trollListener);
+                ran_buttons = !ran_buttons;
+            } else {
+                Log.d(TAG, "mainVoid: Deactivated");
+                button0.setOnClickListener(null);
+                button1.setOnClickListener(null);
+                button2.setOnClickListener(null);
+                button3.setOnClickListener(null);
+                button4.setOnClickListener(null);
+                button5.setOnClickListener(null);
+                button6.setOnClickListener(null);
+                button7.setOnClickListener(null);
+                button8.setOnClickListener(null);
+                button9.setOnClickListener(null);
 
-    }
+                button0.setOnClickListener(listener);
+                button1.setOnClickListener(listener);
+                button2.setOnClickListener(listener);
+                button3.setOnClickListener(listener);
+                button4.setOnClickListener(listener);
+                button5.setOnClickListener(listener);
+                button6.setOnClickListener(listener);
+                button7.setOnClickListener(listener);
+                button8.setOnClickListener(listener);
+                button9.setOnClickListener(listener);
+                ran_buttons = !ran_buttons;
+
+            }
+        };
+
+        TrollSwitch.setOnClickListener(SwitchListener);
+
+
+        if (ran_buttons) {
+            button0.setOnClickListener(trollListener);
+            button1.setOnClickListener(trollListener);
+            button2.setOnClickListener(trollListener);
+            button3.setOnClickListener(trollListener);
+            button4.setOnClickListener(trollListener);
+            button5.setOnClickListener(trollListener);
+            button6.setOnClickListener(trollListener);
+            button7.setOnClickListener(trollListener);
+            button8.setOnClickListener(trollListener);
+            button9.setOnClickListener(trollListener);
+        } else {
+            button0.setOnClickListener(listener);
+            button1.setOnClickListener(listener);
+            button2.setOnClickListener(listener);
+            button3.setOnClickListener(listener);
+            button4.setOnClickListener(listener);
+            button5.setOnClickListener(listener);
+            button6.setOnClickListener(listener);
+            button7.setOnClickListener(listener);
+            button8.setOnClickListener(listener);
+            button9.setOnClickListener(listener);
+
+        }
 
         buttonDot.setOnClickListener(listener);
 

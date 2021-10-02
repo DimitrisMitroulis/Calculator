@@ -7,6 +7,16 @@
     tools:context=".MainActivity">
 
 
+    <Switch
+        android:id="@+id/trollSwitch"
+        android:layout_width="158dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="16dp"
+        android:text="Troll Mode:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/ResultText"
         android:layout_width="229dp"
