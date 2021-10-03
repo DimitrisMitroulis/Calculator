@@ -13,7 +13,7 @@
         android:layout_height="41dp"
         android:layout_marginStart="232dp"
         android:layout_marginTop="16dp"
-        android:text="Troll Mode:"
+        android:text="Random Mode:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

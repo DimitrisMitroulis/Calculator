@@ -88,8 +88,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i <= 9; ++i) numbers.add(i);
         Collections.shuffle(numbers);
 
-        //creating listener so everytime a button gets clicked, it will sho the corresponding element from the array(a random one)
+        //creating listener so everytime a button gets clicked, it will show the corresponding element from the array(a random one)
         // instead of the actual button that is represented
+        //e.g you press number 6 and instead of showing 6 it shows the 6th element from the array
         View.OnClickListener trollListener = view -> {
             Button b = (Button) view;
             newNumber.append(String.valueOf(numbers.get(Integer.parseInt(b.getText().toString()))));
