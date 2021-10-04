@@ -181,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
             button7.setOnClickListener(listener);
             button8.setOnClickListener(listener);
             button9.setOnClickListener(listener);
-
         }
 
         buttonDot.setOnClickListener(listener);
@@ -190,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         //action for button Clear
         View.OnClickListener buttonClearListener = view -> {
             newNumber.setText("");
+            result.setText("");
         };
         buttonClear.setOnClickListener(buttonClearListener);
 
@@ -203,6 +203,32 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         buttonbackSpace.setOnClickListener(buttonBackListener);
+
+        View.OnClickListener opListener = view ->{
+            Button b = (Button) view;
+            String op = b.getText().toString();
+            String value = newNumber.getText().toString();
+            if(value.length()>0){
+
+                result.setText(preformOperation(value,op));
+
+            }
+
+
+
+        };
+
+        buttonEq.setOnClickListener(opListener);
+        buttonPercent.setOnClickListener(opListener);
+        buttonPlus.setOnClickListener(opListener);
+        buttonMinus.setOnClickListener(opListener);
+        buttonMult.setOnClickListener(opListener);
+        buttonDiv.setOnClickListener(opListener);
+
+    }
+    private String preformOperation(String value,String op){
+
+        return"hello";
 
     }
 }
