@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         hideNavBar();
 
-
+        //assigning buttons to the elements on the screen
         button0 = findViewById(R.id.button0);
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
