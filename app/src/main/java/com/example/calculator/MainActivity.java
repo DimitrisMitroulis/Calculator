@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "";
     private Switch TrollSwitch;
     private EditText newNumber, result;
-    private TextView operation;
+    private TextView operationSign;
     private Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9, buttonDot,
             buttonClear, buttonbackSpace, buttonPercent, buttonDiv,
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         buttonEq = findViewById(R.id.buttonEq);
 
 
-        operation = findViewById(R.id.operation);
+        operationSign = findViewById(R.id.operation);
         result = findViewById(R.id.ResultText);
         newNumber = findViewById(R.id.NewNumber);
 
@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener buttonClearListener = view -> {
             newNumber.setText("");
             result.setText("");
+            operant1 = 0.0;
         };
         buttonClear.setOnClickListener(buttonClearListener);
 
@@ -207,7 +208,9 @@ public class MainActivity extends AppCompatActivity {
         buttonbackSpace.setOnClickListener(buttonBackListener);
 
         View.OnClickListener opListener = view ->{
+
             Button b = (Button) view;
+            operationSign.setText(b.getText());
             pendingOp = b.getText().toString();
             String value = newNumber.getText().toString();
             if(value.length()>0){
@@ -216,9 +219,6 @@ public class MainActivity extends AppCompatActivity {
                 preformOperation(value,pendingOp);
 
             }
-
-
-
         };
 
         buttonEq.setOnClickListener(opListener);
