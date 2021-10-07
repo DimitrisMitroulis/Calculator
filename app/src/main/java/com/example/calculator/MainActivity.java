@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
             button5, button6, button7, button8, button9, buttonDot,
             buttonClear, buttonbackSpace, buttonPercent, buttonDiv,
             buttonMult, buttonMinus, buttonPlus, buttonEq;
+    private Double operant1,operant2;
+    private String pendingOp;
 
     List<Integer> numbers = new ArrayList<Integer>();
     private boolean ran_buttons = false;
@@ -206,11 +208,12 @@ public class MainActivity extends AppCompatActivity {
 
         View.OnClickListener opListener = view ->{
             Button b = (Button) view;
-            String op = b.getText().toString();
+            pendingOp = b.getText().toString();
             String value = newNumber.getText().toString();
             if(value.length()>0){
 
-                result.setText(preformOperation(value,op));
+                //result.setText();
+                preformOperation(value,pendingOp);
 
             }
 
@@ -226,9 +229,45 @@ public class MainActivity extends AppCompatActivity {
         buttonDiv.setOnClickListener(opListener);
 
     }
-    private String preformOperation(String value,String op){
+    private void  preformOperation(String value,String op){
+        if(operant1==null) {
+            operant1 = Double.valueOf(value);
+        }else{
+                operant2 = Double.valueOf(value);
+                if(pendingOp.equals("=")){
+                    pendingOp = op;
 
-        return"hello";
+
+                }
+                switch (pendingOp){
+                    case"=":
+                        operant1 = operant2;
+                        break;
+                    case"/":
+                        if(operant2 == 0 ){
+                            operant1 = 0.0;
+
+                        }else{
+                            operant1 /= operant2;
+                        }
+                        break;
+                    case"*":
+                        operant1 *= operant2;
+                        break;
+                    case"-":
+                        operant1 -= operant2;
+                        break;
+                    case"+":
+                        operant1 += operant2;
+                        break;
+                }
+
+                result.setText(operant1.toString());
+                newNumber.setText("");
+            }
+
+
+
 
     }
 }
