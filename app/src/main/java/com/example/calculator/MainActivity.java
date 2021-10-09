@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             button5, button6, button7, button8, button9, buttonDot,
             buttonClear, buttonbackSpace, buttonPercent, buttonDiv,
             buttonMult, buttonMinus, buttonPlus, buttonEq;
-    private Double operant1,operant2;
+    private Double operant1, operant2;
     private String pendingOp;
 
     List<Integer> numbers = new ArrayList<Integer>();
@@ -207,16 +207,16 @@ public class MainActivity extends AppCompatActivity {
         };
         buttonbackSpace.setOnClickListener(buttonBackListener);
 
-        View.OnClickListener opListener = view ->{
+        View.OnClickListener opListener = view -> {
 
             Button b = (Button) view;
             operationSign.setText(b.getText());
             pendingOp = b.getText().toString();
             String value = newNumber.getText().toString();
-            if(value.length()>0){
+            if (value.length() > 0) {
 
                 //result.setText();
-                preformOperation(value,pendingOp);
+                preformOperation(value, pendingOp);
 
             }
         };
@@ -229,44 +229,51 @@ public class MainActivity extends AppCompatActivity {
         buttonDiv.setOnClickListener(opListener);
 
     }
-    private void  preformOperation(String value,String op){
-        if(operant1==null) {
-            operant1 = Double.valueOf(value);
-        }else{
-                operant2 = Double.valueOf(value);
-                if(pendingOp.equals("=")){
-                    pendingOp = op;
+
+    private void preformOperation(String value, String op) {
 
 
-                }
-                switch (pendingOp){
-                    case"=":
-                        operant1 = operant2;
-                        break;
-                    case"/":
-                        if(operant2 == 0 ){
-                            operant1 = 0.0;
+        if (operant1 == null) {
 
-                        }else{
-                            operant1 /= operant2;
-                        }
-                        break;
-                    case"*":
-                        operant1 *= operant2;
-                        break;
-                    case"-":
-                        operant1 -= operant2;
-                        break;
-                    case"+":
-                        operant1 += operant2;
-                        break;
-                }
-
-                result.setText(operant1.toString());
+            try {
+                operant1 = Double.valueOf(value);
+            } catch (NumberFormatException e) {
                 newNumber.setText("");
             }
 
+        } else {
+            operant2 = Double.valueOf(value);
+            if (pendingOp.equals("=")) {
+                pendingOp = op;
 
+
+            }
+            switch (pendingOp) {
+                case "=":
+                    operant1 = operant2;
+                    break;
+                case "/":
+                    if (operant2 == 0) {
+                        operant1 = 0.0;
+
+                    } else {
+                        operant1 /= operant2;
+                    }
+                    break;
+                case "*":
+                    operant1 *= operant2;
+                    break;
+                case "-":
+                    operant1 -= operant2;
+                    break;
+                case "+":
+                    operant1 += operant2;
+                    break;
+            }
+
+            result.setText(operant1.toString());
+            newNumber.setText("");
+        }
 
 
     }
