@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,10 +30,32 @@ public class MainActivity extends AppCompatActivity {
             buttonMult, buttonMinus, buttonPlus, buttonEq;
     private Double operant1, operant2;
     private String pendingOp;
+    private static final String STATE_PENDING_OPERATION = "Pending Operation";
+    private static final String STATE_OPERAND1 = "Operant1";
 
     List<Integer> numbers = new ArrayList<Integer>();
     private boolean ran_buttons = false;
 
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        pendingOp = savedInstanceState.getString(STATE_PENDING_OPERATION);
+        operant1 = Double.valueOf(savedInstanceState.getString(STATE_OPERAND1));
+        operationSign.setText(pendingOp);
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        Log.d(TAG, "onSave: in");
+        outState.putString(STATE_PENDING_OPERATION,pendingOp);
+        if(operant1!=null){
+            outState.putString(STATE_OPERAND1, String.valueOf(operant1));
+        }// saving must be happening before super is called
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSave: out");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
