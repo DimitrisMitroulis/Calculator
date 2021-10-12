@@ -11,9 +11,11 @@
         android:id="@+id/trollSwitch"
         android:layout_width="158dp"
         android:layout_height="41dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="64dp"
         android:text="Troll Mode:"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="72dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/ResultText"
