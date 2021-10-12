@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9, buttonDot,
             buttonClear, buttonbackSpace, buttonPercent, buttonDiv,
-            buttonMult, buttonMinus, buttonPlus, buttonEq;
+            buttonMult, buttonMinus, buttonPlus, buttonEq,buttonNeg;
     private Double operant1, operant2;
     private String pendingOp;
     private static final String STATE_PENDING_OPERATION = "Pending Operation";
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         Log.d(TAG, "onSave: in");
-        outState.putString(STATE_PENDING_OPERATION,pendingOp);
-        if(operant1!=null){
+        outState.putString(STATE_PENDING_OPERATION, pendingOp);
+        if (operant1 != null) {
             outState.putString(STATE_OPERAND1, String.valueOf(operant1));
         }// saving must be happening before super is called
         super.onSaveInstanceState(outState);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         button9 = findViewById(R.id.button9);
         buttonDot = findViewById(R.id.buttonDot);
 
-
+        buttonNeg =findViewById(R.id.buttonNeg);
         buttonClear = findViewById(R.id.buttonClear);
         buttonbackSpace = findViewById(R.id.buttonBackSpace);
         buttonPercent = findViewById(R.id.buttonPercent);
@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             Button b = (Button) view;
             newNumber.append(b.getText().toString());
         };
+
         View.OnClickListener SwitchListener = view -> {
 
             if (!ran_buttons) {
@@ -195,7 +196,8 @@ public class MainActivity extends AppCompatActivity {
             button7.setOnClickListener(trollListener);
             button8.setOnClickListener(trollListener);
             button9.setOnClickListener(trollListener);
-        } else {
+        }
+        else {
             button0.setOnClickListener(listener);
             button1.setOnClickListener(listener);
             button2.setOnClickListener(listener);
@@ -209,7 +211,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         buttonDot.setOnClickListener(listener);
-
+        //action from negative button
+        View.OnClickListener buttonNegativeListener = view -> {
+            String kati = String.valueOf(newNumber.getText());
+            ;
+            newNumber.setText( String.valueOf(-Double.parseDouble(String.valueOf(newNumber.getText()))));
+        };
+        buttonNeg.setOnClickListener(buttonNegativeListener);
 
         //action for button Clear
         View.OnClickListener buttonClearListener = view -> {

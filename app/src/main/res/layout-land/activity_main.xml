@@ -7,6 +7,23 @@
     tools:context=".MainActivity">
 
 
+    <Button
+        android:id="@+id/buttonNeg2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:contextClickable="false"
+        android:gravity="center"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:minWidth="48dp"
+        android:text="Neg"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:cornerRadius="38dp"
+        app:layout_constraintStart_toStartOf="@+id/button1"
+        app:layout_constraintTop_toBottomOf="@+id/button1" />
+
     <Switch
         android:id="@+id/trollSwitch"
         android:layout_width="158dp"
@@ -77,7 +94,9 @@
         android:textSize="30sp"
         app:cornerRadius="38dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonDot"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDot" />
+        app:layout_constraintEnd_toStartOf="@+id/buttonDot"
+        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintStart_toEndOf="@+id/buttonNeg2" />
 
     <Button
         android:id="@+id/button6"
