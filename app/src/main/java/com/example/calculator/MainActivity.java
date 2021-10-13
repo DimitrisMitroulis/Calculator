@@ -213,9 +213,13 @@ public class MainActivity extends AppCompatActivity {
         buttonDot.setOnClickListener(listener);
         //action from negative button
         View.OnClickListener buttonNegativeListener = view -> {
-            String kati = String.valueOf(newNumber.getText());
-            ;
-            newNumber.setText( String.valueOf(-Double.parseDouble(String.valueOf(newNumber.getText()))));
+            if(newNumber.getText().length()>0) {
+
+                newNumber.setText(String.valueOf(-Double.parseDouble(String.valueOf(newNumber.getText()))));
+            }else if(newNumber.getText().length()==0){
+                newNumber.setText("-");
+
+            }
         };
         buttonNeg.setOnClickListener(buttonNegativeListener);
 
