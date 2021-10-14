@@ -212,16 +212,21 @@ public class MainActivity extends AppCompatActivity {
 
         buttonDot.setOnClickListener(listener);
         //action from negative button
-        View.OnClickListener buttonNegativeListener = view -> {
-            if(newNumber.getText().length()>0) {
+        View.OnClickListener buttonNegListener = view -> {
 
-                newNumber.setText(String.valueOf(-Double.parseDouble(String.valueOf(newNumber.getText()))));
-            }else if(newNumber.getText().length()==0){
+            if(newNumber.getText().length()>0) {
+                try {
+                    newNumber.setText(String.valueOf(-Double.parseDouble(String.valueOf(newNumber.getText()))));
+                }catch(Exception e){
+                    newNumber.setText("-");
+
+                }
+            }else{
                 newNumber.setText("-");
 
             }
         };
-        buttonNeg.setOnClickListener(buttonNegativeListener);
+        buttonNeg.setOnClickListener(buttonNegListener);
 
         //action for button Clear
         View.OnClickListener buttonClearListener = view -> {
