@@ -41,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         pendingOp = savedInstanceState.getString(STATE_PENDING_OPERATION);
-        operant1 = Double.valueOf(savedInstanceState.getString(STATE_OPERAND1));
+
+            if(savedInstanceState.getString(STATE_OPERAND1) != null){
+            operant1 = Double.valueOf(savedInstanceState.getString(STATE_OPERAND1));
+        }
         operationSign.setText(pendingOp);
 
     }
@@ -226,7 +229,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+
         buttonNeg.setOnClickListener(buttonNegListener);
+
 
         //action for button Clear
         View.OnClickListener buttonClearListener = view -> {

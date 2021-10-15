@@ -8,7 +8,7 @@
 
 
     <Button
-        android:id="@+id/buttonNeg2"
+        android:id="@+id/buttonNeg"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="8dp"
@@ -96,7 +96,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonDot"
         app:layout_constraintEnd_toStartOf="@+id/buttonDot"
         app:layout_constraintHorizontal_bias="0.888"
-        app:layout_constraintStart_toEndOf="@+id/buttonNeg2" />
+        app:layout_constraintStart_toEndOf="@+id/buttonNeg" />
 
     <Button
         android:id="@+id/button6"
