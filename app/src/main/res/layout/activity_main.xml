@@ -193,6 +193,7 @@
         android:text="B"
         android:textSize="30sp"
         app:cornerRadius="38dp"
+        app:iconGravity="end"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonClear"
         app:layout_constraintStart_toEndOf="@+id/buttonClear" />
 

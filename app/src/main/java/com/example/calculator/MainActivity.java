@@ -28,14 +28,13 @@ public class MainActivity extends AppCompatActivity {
             button5, button6, button7, button8, button9, buttonDot,
             buttonClear, buttonbackSpace, buttonPercent, buttonDiv,
             buttonMult, buttonMinus, buttonPlus, buttonEq,buttonNeg;
-    private Double operant1, operant2;
+    private Double operant1;
     private String pendingOp;
     private static final String STATE_PENDING_OPERATION = "Pending Operation";
     private static final String STATE_OPERAND1 = "Operant1";
 
     List<Integer> numbers = new ArrayList<Integer>();
     private boolean ran_buttons = false;
-
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
@@ -287,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
-            operant2 = Double.valueOf(value);
+            Double operant2 = Double.valueOf(value);
             if (pendingOp.equals("=")) {
                 pendingOp = op;
 
