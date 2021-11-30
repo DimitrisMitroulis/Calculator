@@ -27,11 +27,13 @@ public class MainActivity extends AppCompatActivity {
     private Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9, buttonDot,
             buttonClear, buttonbackSpace, buttonPercent, buttonDiv,
-            buttonMult, buttonMinus, buttonPlus, buttonEq,buttonNeg;
+            buttonMult, buttonMinus, buttonPlus, buttonEq, buttonNeg;
+
     private Double operant1;
     private String pendingOp;
     private static final String STATE_PENDING_OPERATION = "Pending Operation";
     private static final String STATE_OPERAND1 = "Operant1";
+    private String calculation = "";
 
     List<Integer> numbers = new ArrayList<Integer>();
     private boolean ran_buttons = false;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         pendingOp = savedInstanceState.getString(STATE_PENDING_OPERATION);
 
-            if(savedInstanceState.getString(STATE_OPERAND1) != null){
+        if (savedInstanceState.getString(STATE_OPERAND1) != null) {
             operant1 = Double.valueOf(savedInstanceState.getString(STATE_OPERAND1));
         }
         operationSign.setText(pendingOp);
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         button9 = findViewById(R.id.button9);
         buttonDot = findViewById(R.id.buttonDot);
 
-        buttonNeg =findViewById(R.id.buttonNeg);
+        buttonNeg = findViewById(R.id.buttonNeg);
         buttonClear = findViewById(R.id.buttonClear);
         buttonbackSpace = findViewById(R.id.buttonBackSpace);
         buttonPercent = findViewById(R.id.buttonPercent);
@@ -97,10 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mainVoid();
-
-
     }
-
 
     private void hideNavBar() {
         getSupportActionBar().hide();
@@ -126,7 +125,9 @@ public class MainActivity extends AppCompatActivity {
         //normal listener
         View.OnClickListener listener = view -> {
             Button b = (Button) view;
-            newNumber.append(b.getText().toString());
+            calculation = calculation +b.getText().toString();
+            newNumber.setText(calculation);
+            //newNumber.append(b.getText().toString());
         };
 
         View.OnClickListener SwitchListener = view -> {
@@ -155,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
                 button7.setOnClickListener(trollListener);
                 button8.setOnClickListener(trollListener);
                 button9.setOnClickListener(trollListener);
-                ran_buttons = !ran_buttons;
             } else {
                 Log.d(TAG, "mainVoid: Deactivated");
                 button0.setOnClickListener(null);
@@ -179,9 +179,9 @@ public class MainActivity extends AppCompatActivity {
                 button7.setOnClickListener(listener);
                 button8.setOnClickListener(listener);
                 button9.setOnClickListener(listener);
-                ran_buttons = !ran_buttons;
 
             }
+            ran_buttons = !ran_buttons;
         };
 
         TrollSwitch.setOnClickListener(SwitchListener);
@@ -198,8 +198,7 @@ public class MainActivity extends AppCompatActivity {
             button7.setOnClickListener(trollListener);
             button8.setOnClickListener(trollListener);
             button9.setOnClickListener(trollListener);
-        }
-        else {
+        } else {
             button0.setOnClickListener(listener);
             button1.setOnClickListener(listener);
             button2.setOnClickListener(listener);
@@ -213,23 +212,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         buttonDot.setOnClickListener(listener);
-        //action from negative button
-        View.OnClickListener buttonNegListener = view -> {
 
-            if(newNumber.getText().length()>0) {
-                try {
-                    newNumber.setText(String.valueOf(-Double.parseDouble(String.valueOf(newNumber.getText()))));
-                }catch(Exception e){
-                    newNumber.setText("-");
-
-                }
-            }else{
-                newNumber.setText("-");
-
-            }
-        };
-
-        buttonNeg.setOnClickListener(buttonNegListener);
+//        //action from negative button
+//        View.OnClickListener buttonNegListener = view -> {
+//
+//            if (newNumber.getText().length() > 0) {
+//                try {
+//                    newNumber.setText(String.valueOf(-Double.parseDouble(String.valueOf(newNumber.getText()))));
+//                } catch (Exception e) {
+//                    newNumber.setText("-");
+//
+//                }
+//            } else {
+//                newNumber.setText("-");
+//
+//            }
+//        };
+//
+//        buttonNeg.setOnClickListener(buttonNegListener);
 
 
         //action for button Clear
@@ -251,26 +251,52 @@ public class MainActivity extends AppCompatActivity {
         };
         buttonbackSpace.setOnClickListener(buttonBackListener);
 
-        View.OnClickListener opListener = view -> {
+//        View.OnClickListener opListener = view -> {
+//
+//            Button b = (Button) view;
+//            operationSign.setText(b.getText());
+//            pendingOp = b.getText().toString();
+//            String value = newNumber.getText().toString();
+//            if (value.length() > 0) {
+//
+//                //result.setText();
+//                preformOperation(value, pendingOp);
+//
+//            }
+//        };
 
+        View.OnClickListener opListener = view -> {
             Button b = (Button) view;
             operationSign.setText(b.getText());
-            pendingOp = b.getText().toString();
-            String value = newNumber.getText().toString();
-            if (value.length() > 0) {
+            calculation = calculation + operationSign;
 
-                //result.setText();
-                preformOperation(value, pendingOp);
 
-            }
         };
 
-        buttonEq.setOnClickListener(opListener);
-        buttonPercent.setOnClickListener(opListener);
-        buttonPlus.setOnClickListener(opListener);
-        buttonMinus.setOnClickListener(opListener);
-        buttonMult.setOnClickListener(opListener);
-        buttonDiv.setOnClickListener(opListener);
+        View.OnClickListener EqualsListener = view -> {
+            try {
+                Button b = (Button) view;
+                Double Finalresult = Double.valueOf(0);
+                //Finalresult = Double.valueOf(5-8);
+                Finalresult = Double.valueOf(calculation);
+                result.setText(Finalresult.toString());
+
+                //operationSign.setText(b.getText());
+                //calculation = calculation + operationSign;
+            }catch ( Exception e){
+                result.setText("error");
+            }
+
+        };
+
+        buttonEq.setOnClickListener(EqualsListener);
+
+        buttonPercent.setOnClickListener(listener);
+        buttonPlus.setOnClickListener(listener);
+        buttonMinus.setOnClickListener(listener);
+        buttonMult.setOnClickListener(listener);
+        buttonDiv.setOnClickListener(listener);
+        buttonNeg.setOnClickListener(listener);
 
     }
 
