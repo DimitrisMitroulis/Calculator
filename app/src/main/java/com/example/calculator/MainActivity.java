@@ -125,7 +125,10 @@ public class MainActivity extends AppCompatActivity {
         //normal listener
         View.OnClickListener listener = view -> {
             Button b = (Button) view;
-            calculation = calculation +b.getText().toString();
+           //char c = b.getText();
+            //sth
+
+            calculation = calculation + b.getText().toString();
             newNumber.setText(calculation);
             //newNumber.append(b.getText().toString());
         };
@@ -237,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
             newNumber.setText("");
             result.setText("");
             operant1 = 0.0;
+            calculation = " ";
         };
         buttonClear.setOnClickListener(buttonClearListener);
 
@@ -275,10 +279,10 @@ public class MainActivity extends AppCompatActivity {
 
         View.OnClickListener EqualsListener = view -> {
             try {
-                Button b = (Button) view;
-                Double Finalresult = Double.valueOf(0);
-                //Finalresult = Double.valueOf(5-8);
-                Finalresult = Double.valueOf(calculation);
+                //Button b = (Button) view;
+                Double Finalresult = 0.0;
+                Finalresult = Double.valueOf(5-8);
+                //Finalresult = Double.valueOf(calculation);
                 result.setText(Finalresult.toString());
 
                 //operationSign.setText(b.getText());
