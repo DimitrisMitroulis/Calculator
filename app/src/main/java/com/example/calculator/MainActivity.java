@@ -9,13 +9,13 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity extends AppCompatActivity {
@@ -131,6 +131,24 @@ public class MainActivity extends AppCompatActivity {
             calculation = calculation + b.getText().toString();
             newNumber.setText(calculation);
             //newNumber.append(b.getText().toString());
+
+            //Separates the operators with the digits (using regex) storing them in 2 different string arrays and calculates the final result
+            String operators[]=calculation.split("[0-9]+");
+            String operands[]=calculation.split("[*/+-]");
+            double agregate = Integer.parseInt(operands[0]);
+            for(int i=1;i<operands.length;i++){
+                if(operators[i].equals("+"))
+                    agregate += Integer.parseInt(operands[i]);
+                else if(operators[i].equals("-"))
+                    agregate -= Integer.parseInt(operands[i]);
+                else if(operators[i].equals("*"))
+                    agregate *= Integer.parseInt(operands[i]);
+                else
+                    agregate /= Integer.parseInt(operands[i]);
+            }
+            System.out.println(agregate);
+            result.setText(Double.toString(agregate));
+
         };
 
         View.OnClickListener SwitchListener = view -> {
