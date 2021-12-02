@@ -7,11 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.mariuszgromada.math.mxparser.Expression;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,41 +23,42 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "";
     private Switch TrollSwitch;
-    private EditText newNumber, result;
-    private TextView operationSign;
+    private EditText newNumberField;
+    private EditText resultField;
     private Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9, buttonDot,
             buttonClear, buttonbackSpace, buttonPercent, buttonDiv,
-            buttonMult, buttonMinus, buttonPlus, buttonEq, buttonNeg;
+            buttonMult, buttonMinus, buttonPlus, buttonEq;
 
-    private Double operant1;
-    private String pendingOp;
-    private static final String STATE_PENDING_OPERATION = "Pending Operation";
+
     private static final String STATE_OPERAND1 = "Operant1";
-    private String calculation = "";
 
+    //for random switch
     List<Integer> numbers = new ArrayList<Integer>();
     private boolean ran_buttons = false;
+    //for calculation
+    private String calculation = "";
+    private String num1 = "";
+    private String num2 = "";
+    private Float result ;
+    private String operator, prevChar;
+    private String all;
+
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        pendingOp = savedInstanceState.getString(STATE_PENDING_OPERATION);
 
-        if (savedInstanceState.getString(STATE_OPERAND1) != null) {
-            operant1 = Double.valueOf(savedInstanceState.getString(STATE_OPERAND1));
-        }
-        operationSign.setText(pendingOp);
 
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         Log.d(TAG, "onSave: in");
-        outState.putString(STATE_PENDING_OPERATION, pendingOp);
-        if (operant1 != null) {
-            outState.putString(STATE_OPERAND1, String.valueOf(operant1));
-        }// saving must be happening before super is called
+
+//        if (operant1 != null) {
+//            outState.putString(STATE_OPERAND1, String.valueOf(operant1));
+//        }// saving must be happening before super is called
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSave: out");
     }
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         button9 = findViewById(R.id.button9);
         buttonDot = findViewById(R.id.buttonDot);
 
-        buttonNeg = findViewById(R.id.buttonNeg);
+
         buttonClear = findViewById(R.id.buttonClear);
         buttonbackSpace = findViewById(R.id.buttonBackSpace);
         buttonPercent = findViewById(R.id.buttonPercent);
@@ -91,14 +93,13 @@ public class MainActivity extends AppCompatActivity {
         buttonEq = findViewById(R.id.buttonEq);
 
 
-        operationSign = findViewById(R.id.operation);
-        result = findViewById(R.id.ResultText);
-        newNumber = findViewById(R.id.NewNumber);
+        resultField = findViewById(R.id.ResultText);
+        newNumberField = findViewById(R.id.NewNumber);
 
         TrollSwitch = findViewById(R.id.trollSwitch);
-
-
         mainVoid();
+
+
     }
 
     private void hideNavBar() {
@@ -119,15 +120,58 @@ public class MainActivity extends AppCompatActivity {
         //e.g you press number 6 and instead of showing 6 it shows the 6th element from the array
         View.OnClickListener trollListener = view -> {
             Button b = (Button) view;
-            newNumber.append(String.valueOf(numbers.get(Integer.parseInt(b.getText().toString()))));
+            newNumberField.append(String.valueOf(numbers.get(Integer.parseInt(b.getText().toString()))));
 
         };
+
         //normal listener
         View.OnClickListener listener = view -> {
             Button b = (Button) view;
-            calculation = calculation +b.getText().toString();
-            newNumber.setText(calculation);
-            //newNumber.append(b.getText().toString());
+
+            if (isOperator(b.getText().toString())) {
+                if (newNumberField.getText() != null) {
+                    
+                    if (isOperator(prevChar)) {
+                        StringBuffer sb = new StringBuffer(newNumberField.getText());
+                        newNumberField.setText(sb.deleteCharAt(sb.length() - 1));
+                        String kati = String.valueOf(newNumberField.getText());
+                        newNumberField.setText(kati + b.getText().toString());
+                        operator = b.getText().toString();
+                    } else {
+                        operator = b.getText().toString();
+                        String kati = String.valueOf(newNumberField.getText());
+                        newNumberField.setText(kati + b.getText().toString());
+                    }
+                } else {
+                    newNumberField.setText("");
+                }
+            } else {
+                if (operator == null) {
+                    num1 = num1 + b.getText().toString();
+                    String kati = String.valueOf(newNumberField.getText()+b.getText().toString());
+                    newNumberField.setText(kati);
+                    //newNumberField.setText(num1.toString());
+                } else {
+                    num2 = num2 + b.getText().toString();
+                    String kati = String.valueOf(newNumberField.getText()+b.getText().toString());
+                    newNumberField.setText(kati);
+
+                    result = Float.valueOf(preformOperation());
+                    resultField.setText(result.toString());
+
+                    //newNumberField.setText(result.toString());
+                }
+
+            }
+
+            //calculation = calculation + b.getText().toString();
+            //resultField.setText("");
+            all = String.valueOf(newNumberField.getText());
+            Expression exp = new Expression(all);
+            String result = String.valueOf(exp.calculate());
+            resultField.setText(result);
+            Log.d(TAG, "num1: "+num1 +" operator " +operator+" num2 "+ num2+ "all"+all);
+            prevChar = b.getText().toString();
         };
 
         View.OnClickListener SwitchListener = view -> {
@@ -213,40 +257,35 @@ public class MainActivity extends AppCompatActivity {
 
         buttonDot.setOnClickListener(listener);
 
-//        //action from negative button
-//        View.OnClickListener buttonNegListener = view -> {
-//
-//            if (newNumber.getText().length() > 0) {
-//                try {
-//                    newNumber.setText(String.valueOf(-Double.parseDouble(String.valueOf(newNumber.getText()))));
-//                } catch (Exception e) {
-//                    newNumber.setText("-");
-//
-//                }
-//            } else {
-//                newNumber.setText("-");
-//
-//            }
-//        };
-//
-//        buttonNeg.setOnClickListener(buttonNegListener);
-
 
         //action for button Clear
         View.OnClickListener buttonClearListener = view -> {
-            newNumber.setText("");
-            result.setText("");
-            operant1 = 0.0;
+            newNumberField.setText("");
+            resultField.setText("");
+            num1 = "";
+            num2 = "";
+            result = Float.valueOf(0);
+            operator = null;
+            prevChar = "";
+
         };
+
         buttonClear.setOnClickListener(buttonClearListener);
 
         //action for button Back
         View.OnClickListener buttonBackListener = view -> {
-            if (newNumber.getText().length() > 0) {
+            if (newNumberField.getText().length() > 0) {
                 //calling constructor for StringBuffer class
-                StringBuffer sb = new StringBuffer(String.valueOf(newNumber.getText()));
+                StringBuffer sb = new StringBuffer(String.valueOf(newNumberField.getText()));
                 //invoking the method
-                newNumber.setText(sb.deleteCharAt(sb.length() - 1));
+                newNumberField.setText(sb.deleteCharAt(sb.length() - 1));
+
+                StringBuffer sb2 = new StringBuffer(String.valueOf(num2));
+                //invoking the method
+                newNumberField.setText(sb.deleteCharAt(sb.length() - 1));
+
+                result = Float.valueOf(preformOperation());
+                resultField.setText(result.toString());
             }
         };
         buttonbackSpace.setOnClickListener(buttonBackListener);
@@ -267,26 +306,17 @@ public class MainActivity extends AppCompatActivity {
 
         View.OnClickListener opListener = view -> {
             Button b = (Button) view;
-            operationSign.setText(b.getText());
-            calculation = calculation + operationSign;
+            //operationSign.setText(b.getText());
+            //calculation = calculation + operationSign;
 
 
         };
 
         View.OnClickListener EqualsListener = view -> {
-            try {
-                Button b = (Button) view;
-                Double Finalresult = Double.valueOf(0);
-                //Finalresult = Double.valueOf(5-8);
-                Finalresult = Double.valueOf(calculation);
-                result.setText(Finalresult.toString());
-
-                //operationSign.setText(b.getText());
-                //calculation = calculation + operationSign;
-            }catch ( Exception e){
-                result.setText("error");
+            if (result != null) {
+                newNumberField.setText(result.toString());
+                resultField.setText("");
             }
-
         };
 
         buttonEq.setOnClickListener(EqualsListener);
@@ -296,55 +326,76 @@ public class MainActivity extends AppCompatActivity {
         buttonMinus.setOnClickListener(listener);
         buttonMult.setOnClickListener(listener);
         buttonDiv.setOnClickListener(listener);
-        buttonNeg.setOnClickListener(listener);
+
 
     }
 
-    private void preformOperation(String value, String op) {
+    private boolean isOperator(String text) {
+        return text.matches("[-+*/]");
+    }
 
+    private String preformOperation() {
+        switch (operator) {
+            case "+":
+                return String.valueOf((Float.parseFloat(num1) + Float.parseFloat(num2)));
+            case "-":
+                return String.valueOf((Float.parseFloat(num1) - Float.parseFloat(num2)));
 
-        if (operant1 == null) {
+            case "*":
+                return String.valueOf((Float.parseFloat(num1) * Float.parseFloat(num2)));
 
-            try {
-                operant1 = Double.valueOf(value);
-            } catch (NumberFormatException e) {
-                newNumber.setText("");
-            }
-
-        } else {
-            Double operant2 = Double.valueOf(value);
-            if (pendingOp.equals("=")) {
-                pendingOp = op;
-
-
-            }
-            switch (pendingOp) {
-                case "=":
-                    operant1 = operant2;
-                    break;
-                case "/":
-                    if (operant2 == 0) {
-                        operant1 = 0.0;
-
-                    } else {
-                        operant1 /= operant2;
-                    }
-                    break;
-                case "*":
-                    operant1 *= operant2;
-                    break;
-                case "-":
-                    operant1 -= operant2;
-                    break;
-                case "+":
-                    operant1 += operant2;
-                    break;
-            }
-
-            result.setText(operant1.toString());
-            newNumber.setText("");
+            case "/":
+                return String.valueOf((Float.parseFloat(num1) / Float.parseFloat(num2)));
         }
-
-
+        return "";
     }
+
+//    private void preformOperation(String value, String op) {
+//
+//
+//        if (operant1 == null) {
+//
+//            try {
+//                operant1 = Double.valueOf(value);
+//            } catch (NumberFormatException e) {
+//                newNumberField.setText("");
+//            }
+//
+//        } else {
+//            Double operant2 = Double.valueOf(value);
+//            if (pendingOp.equals("=")) {
+//                pendingOp = op;
+//
+//
+//            }
+//            switch (pendingOp) {
+//                case "=":
+//                    operant1 = operant2;
+//                    break;
+//                case "/":
+//                    if (operant2 == 0) {
+//                        operant1 = 0.0;
+//
+//                    } else {
+//                        operant1 /= operant2;
+//                    }
+//                    break;
+//                case "*":
+//                    operant1 *= operant2;
+//                    break;
+//                case "-":
+//                    operant1 -= operant2;
+//                    break;
+//                case "+":
+//                    operant1 += operant2;
+//                    break;
+//            }
+//
+//            resultField.setText(operant1.toString());
+//            newNumberField.setText("");
+//        }
+//     }
+
+
 }
+
