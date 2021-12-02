@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonClear = findViewById(R.id.buttonClear);
         buttonbackSpace = findViewById(R.id.buttonBackSpace);
-        buttonPercent = findViewById(R.id.buttonPercent);
+        //buttonPercent = findViewById(R.id.buttonPercent);
         buttonDiv = findViewById(R.id.buttonDiv);
         buttonMult = findViewById(R.id.buttonMult);
         buttonMinus = findViewById(R.id.buttonMinus);
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonEq.setOnClickListener(EqualsListener);
 
-        buttonPercent.setOnClickListener(listener);
+        //buttonPercent.setOnClickListener(listener);
         buttonPlus.setOnClickListener(listener);
         buttonMinus.setOnClickListener(listener);
         buttonMult.setOnClickListener(listener);
