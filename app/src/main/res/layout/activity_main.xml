@@ -179,11 +179,13 @@
         app:layout_constraintStart_toStartOf="@+id/buttonPlus"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlus" />
 
-    <Button
+    <ImageButton
+
         android:id="@+id/buttonBackSpace"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="296dp"
         android:backgroundTint="#858585"
         android:gravity="center_vertical|center_horizontal"
         android:insetTop="0dp"
@@ -191,11 +193,14 @@
         android:isScrollContainer="false"
         android:minWidth="48dp"
         android:text="B"
+        android:background="@drawable/circle"
+        app:srcCompat = "@drawable/backspace"
         android:textSize="30sp"
         app:cornerRadius="38dp"
-        app:iconGravity="end"
-        app:layout_constraintBaseline_toBaselineOf="@+id/buttonClear"
-        app:layout_constraintStart_toEndOf="@+id/buttonClear" />
+
+        app:layout_constraintStart_toEndOf="@+id/buttonClear"
+        app:layout_constraintTop_toTopOf="parent" />
+        <!--icon for this button from -->
 
     <Button
         android:id="@+id/button3"
@@ -333,7 +338,7 @@
         android:text="%"
         android:textSize="30sp"
         app:cornerRadius="38dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/buttonBackSpace"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonClear"
         app:layout_constraintStart_toEndOf="@+id/buttonBackSpace" />
 
     <EditText

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
@@ -27,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText resultField;
     private Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9, buttonDot,
-            buttonClear, buttonbackSpace, buttonPercent, buttonDiv,
+            buttonClear, buttonPercent, buttonDiv,
             buttonMult, buttonMinus, buttonPlus, buttonEq;
+    private ImageButton buttonbackSpace;
 
 
     private static final String STATE_OPERAND1 = "Operant1";
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private String num1 = "";
     private String num2 = "";
     private String operator;
-
 
 
 
@@ -146,8 +147,7 @@ public class MainActivity extends AppCompatActivity {
             calculation = String.valueOf(newNumberField.getText());
             Expression exp = new Expression(calculation);
             if(!String.valueOf(exp.calculate()).equals("NaN")){
-                resultField.setText(String.valueOf(exp.calculate()));
-            }
+                resultField.setText(String.valueOf(exp.calculate())); }
 
         };
 
@@ -255,18 +255,30 @@ public class MainActivity extends AppCompatActivity {
                 newNumberField.setText(calculation);
 
                 Expression exp = new Expression(calculation);
-                String result = String.valueOf(exp.calculate());
-                resultField.setText(result);
+                if(!String.valueOf(exp.calculate()).equals("NaN")){
+                    resultField.setText(String.valueOf(exp.calculate())); }
 
             }
         };
 
-
+        //listener for Equals Button
         View.OnClickListener EqualsListener = view -> {
             if (resultField != null) {
-                newNumberField.setText(resultField.getText().toString());
-                resultField.setText("");
+                //newNumberField.setText(resultField.getText().toString());
+               //check if a number is .0 then turn it into integer
+                if(isPointZero(resultField.getText().toString())){
+                    //newNumberField.setText(Integer.parseInt(resultField.getText().toString()));
+                    StringBuffer sb = new StringBuffer(resultField.getText());
+                    String res = String.valueOf(sb.deleteCharAt(sb.length() - 1));
+                    res = String.valueOf(sb.deleteCharAt(sb.length() - 1));
+                    newNumberField.setText(res);
+                }else{
+                    newNumberField.setText(resultField.getText().toString());
+                }
                 calculation = resultField.getText().toString();
+                resultField.setText("");
+
+
             }
         };
 
@@ -294,6 +306,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isOperator(String text) {
         return text.matches("[-+*/]");
+    }
+    private boolean isPointZero(String text) {
+        return text.matches("([0-9]+[.]+0)");
     }
 
     private String preformOperation() {
