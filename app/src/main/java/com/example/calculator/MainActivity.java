@@ -40,10 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private String calculation = "";
     private String num1 = "";
     private String num2 = "";
-    private Float result;
     private String operator;
-    private String prevChar = "";
-    private String all;
+
+
 
 
     @Override
@@ -129,35 +128,33 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener listener = view -> {
             Button b = (Button) view;
 
-            all = String.valueOf(newNumberField.getText());
+            calculation = String.valueOf(newNumberField.getText());
+            try {
+                //checks if current char and last was operator,if yes replace the new with the old
+                if (isOperator(b.getText().toString()) && isOperator(calculation.substring(calculation.length() - 1))) {
 
-            if (isOperator(b.getText().toString())) {
-                try {
-                    if (isOperator(all.substring(all.length() - 1))) {
-                        StringBuffer sb = new StringBuffer(all);
-                        all = String.valueOf(sb.deleteCharAt(sb.length() - 1));
-                        newNumberField.setText(all + b.getText().toString());
-                    }
-                } catch (Exception e) {
-                    Log.d(TAG, "mainVoid: Exception");
+                    StringBuffer sb = new StringBuffer(calculation);
+                    calculation = String.valueOf(sb.deleteCharAt(sb.length() - 1));
+
                 }
+            } catch (Exception e) {
+                Log.d(TAG, "mainVoid: Exception");
             }
 
-            newNumberField.setText(all + b.getText().toString());
+            newNumberField.setText(calculation + b.getText().toString());
 
-            all = String.valueOf(newNumberField.getText());
-            Expression exp = new Expression(all);
-            String result = String.valueOf(exp.calculate());
-            resultField.setText(result);
+            calculation = String.valueOf(newNumberField.getText());
+            Expression exp = new Expression(calculation);
+            if(!String.valueOf(exp.calculate()).equals("NaN")){
+                resultField.setText(String.valueOf(exp.calculate()));
+            }
 
-            Log.d(TAG, "num1: " + num1 + " operator " + operator + " num2 " + num2 + " all " + all);
-            //prevChar = b.getText().toString();
         };
 
         View.OnClickListener SwitchListener = view -> {
 
             if (!ran_buttons) {
-                Log.d(TAG, "mainVoid: Activated");
+
                 button0.setOnClickListener(null);
                 button1.setOnClickListener(null);
                 button2.setOnClickListener(null);
@@ -181,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 button8.setOnClickListener(trollListener);
                 button9.setOnClickListener(trollListener);
             } else {
-                Log.d(TAG, "mainVoid: Deactivated");
+
                 button0.setOnClickListener(null);
                 button1.setOnClickListener(null);
                 button2.setOnClickListener(null);
@@ -244,43 +241,35 @@ public class MainActivity extends AppCompatActivity {
             resultField.setText("");
             num1 = "";
             num2 = "";
-            result = Float.valueOf(0);
+            calculation = "";
             operator = null;
-            prevChar = "";
 
         };
-
-        buttonClear.setOnClickListener(buttonClearListener);
 
         //action for button Back
         View.OnClickListener buttonBackListener = view -> {
             if (newNumberField.getText().length() > 0) {
                 //calling constructor for StringBuffer class
-                StringBuffer sb = new StringBuffer(String.valueOf(all));
-                all = String.valueOf(sb.deleteCharAt(sb.length() - 1));
-                newNumberField.setText(all);
+                StringBuffer sb = new StringBuffer(String.valueOf(calculation));
+                calculation = String.valueOf(sb.deleteCharAt(sb.length() - 1));
+                newNumberField.setText(calculation);
 
-                Expression exp = new Expression(all);
+                Expression exp = new Expression(calculation);
                 String result = String.valueOf(exp.calculate());
                 resultField.setText(result);
 
             }
         };
-        buttonbackSpace.setOnClickListener(buttonBackListener);
 
-//        View.OnClickListener opListener = view -> {
-//
-//            Button b = (Button) view;
-//            operationSign.setText(b.getText());
-//            pendingOp = b.getText().toString();
-//            String value = newNumber.getText().toString();
-//            if (value.length() > 0) {
-//
-//                //result.setText();
-//                preformOperation(value, pendingOp);
-//
-//            }
-//        };
+
+        View.OnClickListener EqualsListener = view -> {
+            if (resultField != null) {
+                newNumberField.setText(resultField.getText().toString());
+                resultField.setText("");
+                calculation = resultField.getText().toString();
+            }
+        };
+
 
         View.OnClickListener opListener = view -> {
             Button b = (Button) view;
@@ -290,17 +279,11 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        View.OnClickListener EqualsListener = view -> {
-            if (resultField != null) {
-                newNumberField.setText(resultField.getText().toString());
-                resultField.setText("");
-                all = resultField.getText().toString();
-            }
-        };
-
-        buttonEq.setOnClickListener(EqualsListener);
-
         //buttonPercent.setOnClickListener(listener);
+        buttonEq.setOnClickListener(EqualsListener);
+        buttonClear.setOnClickListener(buttonClearListener);
+        buttonbackSpace.setOnClickListener(buttonBackListener);
+
         buttonPlus.setOnClickListener(listener);
         buttonMinus.setOnClickListener(listener);
         buttonMult.setOnClickListener(listener);
@@ -328,8 +311,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return "";
     }
-
-
 
 
 }
