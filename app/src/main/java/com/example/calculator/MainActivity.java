@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private String calculation = "";
     private String num1 = "";
     private String num2 = "";
-    private Float result ;
-    private String operator, prevChar;
+    private Float result;
+    private String operator;
+    private String prevChar = "";
     private String all;
 
 
@@ -128,50 +129,29 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener listener = view -> {
             Button b = (Button) view;
 
+            all = String.valueOf(newNumberField.getText());
+
             if (isOperator(b.getText().toString())) {
-                if (newNumberField.getText() != null) {
-                    
-                    if (isOperator(prevChar)) {
-                        StringBuffer sb = new StringBuffer(newNumberField.getText());
-                        newNumberField.setText(sb.deleteCharAt(sb.length() - 1));
-                        String kati = String.valueOf(newNumberField.getText());
-                        newNumberField.setText(kati + b.getText().toString());
-                        operator = b.getText().toString();
-                    } else {
-                        operator = b.getText().toString();
-                        String kati = String.valueOf(newNumberField.getText());
-                        newNumberField.setText(kati + b.getText().toString());
+                try {
+                    if (isOperator(all.substring(all.length() - 1))) {
+                        StringBuffer sb = new StringBuffer(all);
+                        all = String.valueOf(sb.deleteCharAt(sb.length() - 1));
+                        newNumberField.setText(all + b.getText().toString());
                     }
-                } else {
-                    newNumberField.setText("");
+                } catch (Exception e) {
+                    Log.d(TAG, "mainVoid: Exception");
                 }
-            } else {
-                if (operator == null) {
-                    num1 = num1 + b.getText().toString();
-                    String kati = String.valueOf(newNumberField.getText()+b.getText().toString());
-                    newNumberField.setText(kati);
-                    //newNumberField.setText(num1.toString());
-                } else {
-                    num2 = num2 + b.getText().toString();
-                    String kati = String.valueOf(newNumberField.getText()+b.getText().toString());
-                    newNumberField.setText(kati);
-
-                    result = Float.valueOf(preformOperation());
-                    resultField.setText(result.toString());
-
-                    //newNumberField.setText(result.toString());
-                }
-
             }
 
-            //calculation = calculation + b.getText().toString();
-            //resultField.setText("");
+            newNumberField.setText(all + b.getText().toString());
+
             all = String.valueOf(newNumberField.getText());
             Expression exp = new Expression(all);
             String result = String.valueOf(exp.calculate());
             resultField.setText(result);
-            Log.d(TAG, "num1: "+num1 +" operator " +operator+" num2 "+ num2+ "all"+all);
-            prevChar = b.getText().toString();
+
+            Log.d(TAG, "num1: " + num1 + " operator " + operator + " num2 " + num2 + " all " + all);
+            //prevChar = b.getText().toString();
         };
 
         View.OnClickListener SwitchListener = view -> {
@@ -276,16 +256,14 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener buttonBackListener = view -> {
             if (newNumberField.getText().length() > 0) {
                 //calling constructor for StringBuffer class
-                StringBuffer sb = new StringBuffer(String.valueOf(newNumberField.getText()));
-                //invoking the method
-                newNumberField.setText(sb.deleteCharAt(sb.length() - 1));
+                StringBuffer sb = new StringBuffer(String.valueOf(all));
+                all = String.valueOf(sb.deleteCharAt(sb.length() - 1));
+                newNumberField.setText(all);
 
-                StringBuffer sb2 = new StringBuffer(String.valueOf(num2));
-                //invoking the method
-                newNumberField.setText(sb.deleteCharAt(sb.length() - 1));
+                Expression exp = new Expression(all);
+                String result = String.valueOf(exp.calculate());
+                resultField.setText(result);
 
-                result = Float.valueOf(preformOperation());
-                resultField.setText(result.toString());
             }
         };
         buttonbackSpace.setOnClickListener(buttonBackListener);
@@ -313,9 +291,10 @@ public class MainActivity extends AppCompatActivity {
         };
 
         View.OnClickListener EqualsListener = view -> {
-            if (result != null) {
-                newNumberField.setText(result.toString());
+            if (resultField != null) {
+                newNumberField.setText(resultField.getText().toString());
                 resultField.setText("");
+                all = resultField.getText().toString();
             }
         };
 
@@ -350,51 +329,7 @@ public class MainActivity extends AppCompatActivity {
         return "";
     }
 
-//    private void preformOperation(String value, String op) {
-//
-//
-//        if (operant1 == null) {
-//
-//            try {
-//                operant1 = Double.valueOf(value);
-//            } catch (NumberFormatException e) {
-//                newNumberField.setText("");
-//            }
-//
-//        } else {
-//            Double operant2 = Double.valueOf(value);
-//            if (pendingOp.equals("=")) {
-//                pendingOp = op;
-//
-//
-//            }
-//            switch (pendingOp) {
-//                case "=":
-//                    operant1 = operant2;
-//                    break;
-//                case "/":
-//                    if (operant2 == 0) {
-//                        operant1 = 0.0;
-//
-//                    } else {
-//                        operant1 /= operant2;
-//                    }
-//                    break;
-//                case "*":
-//                    operant1 *= operant2;
-//                    break;
-//                case "-":
-//                    operant1 -= operant2;
-//                    break;
-//                case "+":
-//                    operant1 += operant2;
-//                    break;
-//            }
-//
-//            resultField.setText(operant1.toString());
-//            newNumberField.setText("");
-//        }
-//     }
+
 
 
 }
