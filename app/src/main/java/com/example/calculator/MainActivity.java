@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton buttonbackSpace;
 
 
+    public static final String STATE_CALCULATION = "calculation";
+    public static final String STATE_NEWTEXT = "newTextField";
+    public static final String STATE_RESULT = "result";
+
+
     private static final String STATE_OPERAND1 = "Operant1";
 
     //for random switch
@@ -40,25 +45,30 @@ public class MainActivity extends AppCompatActivity {
     private boolean ran_buttons = false;
     //for calculation
     private String calculation = "";
-    private String num1 = "";
-    private String num2 = "";
-    private String operator;
+
 
 
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        calculation= savedInstanceState.getString(STATE_CALCULATION);
+        newNumberField.setText( savedInstanceState.getString(STATE_NEWTEXT));
+        resultField.setText( savedInstanceState.getString(STATE_RESULT));
+
+
 
 
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        Log.d(TAG, "onSave: in");
+        outState.putString(STATE_CALCULATION, calculation);
+        outState.putString(STATE_NEWTEXT, newNumberField.getText().toString());
+        outState.putString(STATE_RESULT, resultField.getText().toString());
 
         super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSave: out");
+
     }
 
     @Override
@@ -256,10 +266,8 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener buttonClearListener = view -> {
             newNumberField.setText("");
             resultField.setText("");
-            num1 = "";
-            num2 = "";
             calculation = "";
-            operator = null;
+
 
         };
 
@@ -328,21 +336,7 @@ public class MainActivity extends AppCompatActivity {
         return text.matches("([0-9]+[.]+0)");
     }
 
-    private String preformOperation() {
-        switch (operator) {
-            case "+":
-                return String.valueOf((Float.parseFloat(num1) + Float.parseFloat(num2)));
-            case "-":
-                return String.valueOf((Float.parseFloat(num1) - Float.parseFloat(num2)));
 
-            case "*":
-                return String.valueOf((Float.parseFloat(num1) * Float.parseFloat(num2)));
-
-            case "/":
-                return String.valueOf((Float.parseFloat(num1) / Float.parseFloat(num2)));
-        }
-        return "";
-    }
 
 
 }

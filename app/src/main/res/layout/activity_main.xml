@@ -180,26 +180,25 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonPlus" />
 
     <ImageButton
-
         android:id="@+id/buttonBackSpace"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="296dp"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/circle"
         android:backgroundTint="#858585"
         android:gravity="center_vertical|center_horizontal"
         android:insetTop="0dp"
         android:insetBottom="0dp"
+
         android:isScrollContainer="false"
         android:minWidth="48dp"
-        android:text="B"
-        android:background="@drawable/circle"
-        app:srcCompat = "@drawable/backspace"
         android:textSize="30sp"
         app:cornerRadius="38dp"
 
         app:layout_constraintStart_toEndOf="@+id/buttonClear"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/NewNumber"
+        app:srcCompat="@drawable/backspace" />
         <!--icon for this button from -->
 
     <Button
