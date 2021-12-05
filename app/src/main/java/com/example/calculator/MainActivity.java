@@ -57,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         Log.d(TAG, "onSave: in");
 
-//        if (operant1 != null) {
-//            outState.putString(STATE_OPERAND1, String.valueOf(operant1));
-//        }// saving must be happening before super is called
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSave: out");
     }
@@ -121,7 +118,27 @@ public class MainActivity extends AppCompatActivity {
         //e.g you press number 6 and instead of showing 6 it shows the 6th element from the array
         View.OnClickListener trollListener = view -> {
             Button b = (Button) view;
+
             newNumberField.append(String.valueOf(numbers.get(Integer.parseInt(b.getText().toString()))));
+
+            try {
+                //checks if current char and last was operator,if yes replace the new with the old
+                if (isOperator(b.getText().toString()) && isOperator(calculation.substring(calculation.length() - 1))) {
+
+                    StringBuffer sb = new StringBuffer(calculation);
+                    calculation = String.valueOf(sb.deleteCharAt(sb.length() - 1));
+
+                }
+            } catch (Exception e) {
+                Log.d(TAG, "mainVoid: Exception");
+            }
+
+            newNumberField.setText(calculation + String.valueOf(numbers.get(Integer.parseInt(b.getText().toString()))));
+
+            calculation = String.valueOf(newNumberField.getText());
+            Expression exp = new Expression(calculation);
+            if(!String.valueOf(exp.calculate()).equals("NaN")){
+                resultField.setText(String.valueOf(exp.calculate())); }
 
         };
 
