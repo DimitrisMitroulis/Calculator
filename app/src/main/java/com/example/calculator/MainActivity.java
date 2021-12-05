@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void printChar(String buttonText) {
 
-
+        //check if button text is operator
         if (isOperator(buttonText)) {
             //newNumberText.getText().toString = String.valueOf(newNumberField.getText());
             try {
@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
                     newNumberField.setText((String.valueOf(sb.deleteCharAt(sb.length() - 1))));
                     newNumberField.setText(newNumberField.getText().toString() + buttonText);
 
-                }else{
+                } else {
 
                     newNumberField.setText(newNumberField.getText().toString() + buttonText);
                 }
@@ -301,32 +301,27 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-
             try {
                 //checks if current char and last was a "." so to not be printed twice
                 if (!buttonText.equals(".") || !newNumberField.getText().toString().substring(newNumberField.getText().toString().length() - 1).equals(".")) {
                     if (ran_buttons) {
 
                         newNumberField.setText(newNumberField.getText().toString() + numbers.get(Integer.parseInt(buttonText)));
-                        //newNumberField.getText().toString() = String.valueOf(newNumberField.getText());
-
 
                     } else {
                         newNumberField.setText(newNumberField.getText().toString() + buttonText);
-                        //newNumberField.getText().toString() = String.valueOf(newNumberField.getText());
 
                     }
-
-
                 }
             } catch (Exception e) {
                 Log.d(TAG, "mainVoid: Exception");
                 e.printStackTrace();
             }
         }
-        Expression exp = new Expression(newNumberField.getText().toString());
-        if (!String.valueOf(exp.calculate()).equals("NaN")) {
 
+        Expression exp = new Expression(newNumberField.getText().toString());
+        //to not print NaN
+        if (!String.valueOf(exp.calculate()).equals("NaN")) {
             resultField.setText(String.valueOf(exp.calculate()));
         }
     }
