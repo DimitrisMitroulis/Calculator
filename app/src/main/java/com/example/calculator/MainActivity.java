@@ -44,26 +44,22 @@ public class MainActivity extends AppCompatActivity {
     List<Integer> numbers = new ArrayList<Integer>();
     private boolean ran_buttons = false;
     //for calculation
-    private String calculation = "";
-
-
+    //private String newNumberText.getText().toString = "";
 
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        calculation= savedInstanceState.getString(STATE_CALCULATION);
-        newNumberField.setText( savedInstanceState.getString(STATE_NEWTEXT));
-        resultField.setText( savedInstanceState.getString(STATE_RESULT));
-
-
+        //newNumberText.getText().toString = savedInstanceState.getString(STATE_CALCULATION);
+        newNumberField.setText(savedInstanceState.getString(STATE_NEWTEXT));
+        resultField.setText(savedInstanceState.getString(STATE_RESULT));
 
 
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString(STATE_CALCULATION, calculation);
+        //outState.putString(STATE_CALCULATION, newNumberText.getText().toString);
         outState.putString(STATE_NEWTEXT, newNumberField.getText().toString());
         outState.putString(STATE_RESULT, resultField.getText().toString());
 
@@ -118,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 );
     }
 
+
     private void mainVoid() {
         //shuffles an array of numbers
         for (int i = 0; i <= 9; ++i) numbers.add(i);
@@ -126,56 +123,17 @@ public class MainActivity extends AppCompatActivity {
         //creating listener so everytime a button gets clicked, it will show the corresponding element from the array(a random one)
         // instead of the actual button that is represented
         //e.g you press number 6 and instead of showing 6 it shows the 6th element from the array
+        //random Listener
         View.OnClickListener trollListener = view -> {
             Button b = (Button) view;
-
-            newNumberField.append(String.valueOf(numbers.get(Integer.parseInt(b.getText().toString()))));
-
-            try {
-                //checks if current char and last was operator,if yes replace the new with the old
-                if (isOperator(b.getText().toString()) && isOperator(calculation.substring(calculation.length() - 1))) {
-
-                    StringBuffer sb = new StringBuffer(calculation);
-                    calculation = String.valueOf(sb.deleteCharAt(sb.length() - 1));
-
-                }
-            } catch (Exception e) {
-                Log.d(TAG, "mainVoid: Exception");
-            }
-
-            newNumberField.setText(calculation + String.valueOf(numbers.get(Integer.parseInt(b.getText().toString()))));
-
-            calculation = String.valueOf(newNumberField.getText());
-            Expression exp = new Expression(calculation);
-            if(!String.valueOf(exp.calculate()).equals("NaN")){
-                resultField.setText(String.valueOf(exp.calculate())); }
+            printChar(b.getText().toString());
 
         };
 
         //normal listener
         View.OnClickListener listener = view -> {
             Button b = (Button) view;
-
-            calculation = String.valueOf(newNumberField.getText());
-            try {
-                //checks if current char and last was operator,if yes replace the new with the old
-                if (isOperator(b.getText().toString()) && isOperator(calculation.substring(calculation.length() - 1))) {
-
-                    StringBuffer sb = new StringBuffer(calculation);
-                    calculation = String.valueOf(sb.deleteCharAt(sb.length() - 1));
-
-                }
-            } catch (Exception e) {
-                Log.d(TAG, "mainVoid: Exception");
-            }
-
-            newNumberField.setText(calculation + b.getText().toString());
-
-            calculation = String.valueOf(newNumberField.getText());
-            Expression exp = new Expression(calculation);
-            if(!String.valueOf(exp.calculate()).equals("NaN")){
-                resultField.setText(String.valueOf(exp.calculate())); }
-
+            printChar(b.getText().toString());
         };
 
         View.OnClickListener SwitchListener = view -> {
@@ -234,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
 
         TrollSwitch.setOnClickListener(SwitchListener);
 
-
         if (ran_buttons) {
             button0.setOnClickListener(trollListener);
             button1.setOnClickListener(trollListener);
@@ -259,14 +216,12 @@ public class MainActivity extends AppCompatActivity {
             button9.setOnClickListener(listener);
         }
 
-        buttonDot.setOnClickListener(listener);
-
 
         //action for button Clear
         View.OnClickListener buttonClearListener = view -> {
             newNumberField.setText("");
             resultField.setText("");
-            calculation = "";
+            //newNumberText.getText().toString = "";
 
 
         };
@@ -275,13 +230,14 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener buttonBackListener = view -> {
             if (newNumberField.getText().length() > 0) {
                 //calling constructor for StringBuffer class
-                StringBuffer sb = new StringBuffer(String.valueOf(calculation));
-                calculation = String.valueOf(sb.deleteCharAt(sb.length() - 1));
-                newNumberField.setText(calculation);
+                StringBuffer sb = new StringBuffer(String.valueOf(newNumberField.getText().toString()));
+                newNumberField.setText(String.valueOf(sb.deleteCharAt(sb.length() - 1)));
+                newNumberField.setText(newNumberField.getText().toString());
 
-                Expression exp = new Expression(calculation);
-                if(!String.valueOf(exp.calculate()).equals("NaN")){
-                    resultField.setText(String.valueOf(exp.calculate())); }
+                Expression exp = new Expression(newNumberField.getText().toString());
+                if (!String.valueOf(exp.calculate()).equals("NaN")) {
+                    resultField.setText(String.valueOf(exp.calculate()));
+                }
 
             }
         };
@@ -290,17 +246,17 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener EqualsListener = view -> {
             if (resultField != null) {
                 //newNumberField.setText(resultField.getText().toString());
-               //check if a number is .0 then turn it into integer
-                if(isPointZero(resultField.getText().toString())){
+                //check if a number is .0 then turn it into integer
+                if (isPointZero(resultField.getText().toString())) {
                     //newNumberField.setText(Integer.parseInt(resultField.getText().toString()));
                     StringBuffer sb = new StringBuffer(resultField.getText());
                     String res = String.valueOf(sb.deleteCharAt(sb.length() - 1));
                     res = String.valueOf(sb.deleteCharAt(sb.length() - 1));
                     newNumberField.setText(res);
-                }else{
+                } else {
                     newNumberField.setText(resultField.getText().toString());
                 }
-                calculation = resultField.getText().toString();
+                newNumberField.setText(resultField.getText().toString());
                 resultField.setText("");
 
 
@@ -308,19 +264,12 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        View.OnClickListener opListener = view -> {
-            Button b = (Button) view;
-            //operationSign.setText(b.getText());
-            //calculation = calculation + operationSign;
-
-
-        };
-
         //buttonPercent.setOnClickListener(listener);
         buttonEq.setOnClickListener(EqualsListener);
         buttonClear.setOnClickListener(buttonClearListener);
         buttonbackSpace.setOnClickListener(buttonBackListener);
 
+        buttonDot.setOnClickListener(listener);
         buttonPlus.setOnClickListener(listener);
         buttonMinus.setOnClickListener(listener);
         buttonMult.setOnClickListener(listener);
@@ -329,14 +278,66 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void printChar(String buttonText) {
+
+
+        if (isOperator(buttonText)) {
+            //newNumberText.getText().toString = String.valueOf(newNumberField.getText());
+            try {
+                //checks if current char and last was operator,if yes replace the new with the old
+                if (isOperator(newNumberField.getText().toString().substring(newNumberField.getText().toString().length() - 1))) {
+
+                    StringBuffer sb = new StringBuffer(newNumberField.getText().toString());
+                    newNumberField.setText((String.valueOf(sb.deleteCharAt(sb.length() - 1))));
+                    newNumberField.setText(newNumberField.getText().toString() + buttonText);
+
+                }else{
+
+                    newNumberField.setText(newNumberField.getText().toString() + buttonText);
+                }
+            } catch (Exception e) {
+                Log.d(TAG, "mainVoid: Exception");
+                e.printStackTrace();
+            }
+        } else {
+
+            try {
+                //checks if current char and last was a "." so to not be printed twice
+                if (!buttonText.equals(".") || !newNumberField.getText().toString().substring(newNumberField.getText().toString().length() - 1).equals(".")) {
+                    if (ran_buttons) {
+
+                        newNumberField.setText(newNumberField.getText().toString() + numbers.get(Integer.parseInt(buttonText)));
+                        //newNumberField.getText().toString() = String.valueOf(newNumberField.getText());
+
+
+                    } else {
+                        newNumberField.setText(newNumberField.getText().toString() + buttonText);
+                        //newNumberField.getText().toString() = String.valueOf(newNumberField.getText());
+
+                    }
+
+
+                }
+            } catch (Exception e) {
+                Log.d(TAG, "mainVoid: Exception");
+                e.printStackTrace();
+            }
+        }
+        Expression exp = new Expression(newNumberField.getText().toString());
+        if (!String.valueOf(exp.calculate()).equals("NaN")) {
+
+            resultField.setText(String.valueOf(exp.calculate()));
+        }
+    }
+
     private boolean isOperator(String text) {
         return text.matches("[-+*/]");
     }
+
     private boolean isPointZero(String text) {
         return text.matches("([0-9]+[.]+0)");
     }
-
-
 
 
 }
