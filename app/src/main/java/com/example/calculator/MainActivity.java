@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton buttonbackSpace;
 
 
-    public static final String STATE_CALCULATION = "calculation";
+
     public static final String STATE_NEWTEXT = "newTextField";
     public static final String STATE_RESULT = "result";
 
 
-    private static final String STATE_OPERAND1 = "Operant1";
+
 
     //for random switch
     List<Integer> numbers = new ArrayList<Integer>();
